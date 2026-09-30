@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+  command = "echo 'Building static portal for Mana Telangana'"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "ALLOWALL"
+    Access-Control-Allow-Origin = "*"
