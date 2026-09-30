@@ -1,0 +1,6 @@
+{
+  "name": "CivicPulse",
+  "description": "Enterprise Indian civic grievance platform that processes unstructured input via Gemini API.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
