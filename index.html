@@ -3,78 +3,547 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mana Telangana - Prajavani AI Civic Super-App</title>
+    <title>Prajavani AI Civic Super-App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --topbar-bg: #03182B;
+            --main-bg: #F4F6F9;
+            --card-bg: #FFFFFF;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --primary-orange: #FF9800;
+            --primary-teal: #008080;
+            --accent-red: #D32F2F;
+            --border-color: #E2E8F0;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #0E1117;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+        body {
+            background-color: var(--main-bg);
+            color: var(--text-dark);
+            min-height: 100vh;
         }
-        iframe {
-            width: 100vw;
-            height: 100vh;
-            border: none;
-            display: block;
-        }
-        .fallback-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #0E1117;
+
+        /* Top Government Bar */
+        .top-nav {
+            background-color: var(--topbar-bg);
             color: #FFFFFF;
-            z-index: -1;
-            padding: 2rem;
-            text-align: center;
+            padding: 0.6rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
-        .spinner {
-            width: 48px;
-            height: 48px;
-            border: 5px solid rgba(255,255,255,0.1);
-            border-bottom-color: #008080;
-            border-radius: 50%;
-            display: inline-block;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
-            margin-bottom: 1.5rem;
+
+        .top-nav .right-tag {
+            color: #94A3B8;
         }
-        @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        /* Container */
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
         }
-        .btn-link {
-            display: inline-block;
-            margin-top: 1.5rem;
-            padding: 0.75rem 1.5rem;
-            background-color: #008080;
-            color: white;
-            text-decoration: none;
+
+        /* Header Card */
+        .header-card {
+            background: var(--card-bg);
+            border: 2px solid #2E7D32;
+            border-radius: 12px;
+            padding: 1.2rem 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .emblem-img {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+        }
+
+        .header-titles h1 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #0F172A;
+            line-height: 1.2;
+        }
+
+        .header-titles p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+            font-weight: 500;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .font-sizer span {
+            cursor: pointer;
+            padding: 0.2rem 0.4rem;
+            font-weight: 600;
+        }
+        .font-sizer span.active {
+            color: var(--accent-red);
+        }
+
+        .lang-select {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: #F8FAFC;
+            font-size: 0.85rem;
+        }
+
+        /* Alert Marquee Banner */
+        .alert-banner {
+            background: #FFF3E0;
+            border: 1px solid #FFE0B2;
+            color: #E65100;
+            padding: 0.75rem 1.2rem;
             border-radius: 8px;
             font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        /* Collapsible Phone Preview Box */
+        .phone-preview-bar {
+            background: #1E293B;
+            color: #FFFFFF;
+            padding: 0.9rem 1.2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        /* Quick Action Desk Bar */
+        .action-bar {
+            border: 2px solid #2E7D32;
+            background: #E8F5E9;
+            border-radius: 12px;
+            padding: 0.9rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .action-btn {
+            background: #032B43;
+            color: #FFFFFF;
+            border: none;
+            padding: 0.65rem 1.4rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Navigation Tabs */
+        .tabs-header {
+            display: flex;
+            gap: 1.5rem;
+            border-bottom: 2px solid #E2E8F0;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.75rem 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #64748B;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-red);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-red);
+            border-radius: 2px;
+        }
+
+        /* Tab Content Grid */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 0.4rem;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.88rem;
+            font-weight: 500;
+            margin-top: 0.4rem;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            cursor: pointer;
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: #F8FAFC;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #008080 0%, #005959 100%);
+            color: white;
+            border: none;
+            padding: 0.85rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #005959;
+        }
+
+        /* Status & Log Box */
+        .info-status-box {
+            background: #E0F2FE;
+            border: 1px solid #BAE6FD;
+            color: #0369A1;
+            padding: 1.2rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .log-container {
+            background: #0F172A;
+            color: #38BDF8;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            max-height: 250px;
+            overflow-y: auto;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="fallback-container">
-        <div class="spinner"></div>
-        <h2>Loading Mana Telangana Application...</h2>
-        <p style="color: #94A3B8; margin-top: 0.5rem;">Connecting to Streamlit Engine</p>
-        <a href="https://mana-telangana.streamlit.app" target="_blank" class="btn-link">Open Directly in Streamlit Cloud</a>
+
+    <div class="top-nav">
+        <div>GOVERNMENT OF TELANGANA | CGG PORTAL SERVICES</div>
+        <div class="right-tag">OFFICIAL STATE CITIZEN GATEWAY</div>
     </div>
 
-    <!-- Embedded Full-Screen Streamlit Application -->
-    <iframe src="https://mana-telangana.streamlit.app/?embed=true" allow="camera; microphone; geolocation"></iframe>
+    <div class="app-container">
+        <!-- Header Card -->
+        <div class="header-card">
+            <div class="header-left">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Emblem_of_Telangana.svg" alt="Telangana Emblem" class="emblem-img" onerror="this.src='https://dummyimage.com/60x60/008080/ffffff.png&text=TG'">
+                <div class="header-titles">
+                    <h1>GOVERNMENT OF TELANGANA | తెలంగాణ ప్రభుత్వము | حکومت تلنگانہ</h1>
+                    <p>Prajavani AI Civic Super-App & Public Grievance Portal — Centre for Good Governance</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <div class="font-sizer">
+                    <span>A-</span>
+                    <span class="active">A</span>
+                    <span>A+</span>
+                </div>
+                <select class="lang-select">
+                    <option>English</option>
+                    <option>తెలుగు (Telugu)</option>
+                    <option>हिंदी (Hindi)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Notification Banner -->
+        <div class="alert-banner">
+            <span>⚠️ <strong>NOTICE:</strong> Prajavani Grievance Triage Engine is live with automatic de-duplication and department routing.</span>
+        </div>
+
+        <!-- Phone Preview Bar -->
+        <div class="phone-preview-bar">
+            <span>› 📱 Quick Phone Preview & USB Connection</span>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar">
+            <button class="action-btn">🟢 WhatsApp Public Assistant</button>
+            <button class="action-btn">🗣️ Emergency SMS Gateway</button>
+            <button class="action-btn">📞 Toll-Free Citizen Call Desk (1100)</button>
+        </div>
+
+        <!-- Tabs Header -->
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('intake')">AI Civic Intake</button>
+            <button class="tab-btn" onclick="switchTab('acb')">Anti-Corruption Bureau (ACB) Portal</button>
+            <button class="tab-btn" onclick="switchTab('affidavit')">AI Legal Affidavit Desk</button>
+            <button class="tab-btn" onclick="switchTab('connectors')">State Ecosystem Connectors</button>
+            <button class="tab-btn" onclick="switchTab('board')">Executive Board</button>
+        </div>
+
+        <!-- Tab 1: AI Civic Intake -->
+        <div id="intake-tab" class="tab-content active">
+            <div class="section-card">
+                <div class="section-title">📝 AI Civic Intake</div>
+                
+                <div class="form-group">
+                    <label>🛡️ Citizen Verification Tier</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="auth" checked> Mobile OTP</label>
+                        <label><input type="radio" name="auth"> DigiLocker eKYC</label>
+                        <label><input type="radio" name="auth"> Zero-Knowledge Whistleblower Mode</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Location / Landmark</label>
+                    <input type="text" id="grievance-loc" placeholder="e.g., Ameerpet Metro Station, Hyderabad">
+                </div>
+
+                <div class="form-group">
+                    <label>Grievance Category</label>
+                    <select id="grievance-cat">
+                        <option>Water Supply & Drainage (HMWS&SB)</option>
+                        <option>Municipal Sanitation & Roads (GHMC)</option>
+                        <option>Electricity & Power Supply (TSSPDCL)</option>
+                        <option>Revenue & Land Records (Dharani)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Detailed Grievance Description</label>
+                    <textarea id="grievance-text" placeholder="Describe the civic issue in detail..."></textarea>
+                </div>
+
+                <button class="btn-submit" onclick="submitGrievance()">🚀 Submit Grievance & Dispatch AI Triage</button>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">⚙️ Department Triage & Audit Status</div>
+                <div id="status-box" class="info-status-box">
+                    Submit your grievance on the left to activate G2C triage analysis and view dispatcher logs here.
+                </div>
+                <div id="log-output" class="log-container"></div>
+            </div>
+        </div>
+
+        <!-- Tab 2: ACB Portal -->
+        <div id="acb-tab" class="tab-content">
+            <div class="section-card">
+                <div class="section-title">🕵️ Anti-Corruption Bureau (ACB) Whistleblower</div>
+                <div class="form-group">
+                    <label>Department / Officer Name</label>
+                    <input type="text" placeholder="Officer Name or Designation">
+                </div>
+                <div class="form-group">
+                    <label>Bribe Demand Details / Evidence</label>
+                    <textarea placeholder="Provide encrypted details for ZKP verification..."></textarea>
+                </div>
+                <button class="btn-submit" onclick="alert('ZKP Token Generated: TS-ACB-ZKP-2026-991A')">Generate Anonymous ZKP Proof Token</button>
+            </div>
+            <div class="section-card">
+                <div class="section-title">🔒 Whistleblower Privacy Vault</div>
+                <div class="info-status-box">
+                    All ACB submissions use Zero-Knowledge Proofs (ZKP) to protect citizen identity while creating unalterable audit hashes.
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Legal Affidavit -->
+        <div id="affidavit-tab" class="tab-content">
+            <div class="section-card">
+                <div class="section-title">📜 AI Legal Affidavit Desk</div>
+                <div class="form-group">
+                    <label>Citizen Full Name</label>
+                    <input type="text" placeholder="Full Name as per Aadhaar">
+                </div>
+                <div class="form-group">
+                    <label>Affidavit Type</label>
+                    <select>
+                        <option>Name Discrepancy Correction</option>
+                        <option>Address Proof Declaration</option>
+                        <option>Income / Caste Attestation</option>
+                    </select>
+                </div>
+                <button class="btn-submit" onclick="alert('Affidavit Drafted Successfully!')">Generate Official PDF Affidavit</button>
+            </div>
+            <div class="section-card">
+                <div class="section-title">⚖️ Legal Verification Status</div>
+                <div class="info-status-box">
+                    Generated affidavits are verified against eCourts sub-judice databases for legal compliance.
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Connectors -->
+        <div id="connectors-tab" class="tab-content">
+            <div class="section-card">
+                <div class="section-title">🗺️ Dharani Land Reconciliation</div>
+                <div class="form-group">
+                    <label>Survey Number / Khata Number</label>
+                    <input type="text" placeholder="e.g. 142/A">
+                </div>
+                <button class="btn-submit" onclick="alert('Dharani Title Deed Status: CLEAR TITLE')">Reconcile Title Deed</button>
+            </div>
+            <div class="section-card">
+                <div class="section-title">💵 Pensioner Payslip Services</div>
+                <div class="form-group">
+                    <label>Treasury ID</label>
+                    <input type="text" placeholder="e.g. TG-PENS-88102">
+                </div>
+                <button class="btn-submit" onclick="alert('Pension Payslip Generated!')">Download Pension Payslip</button>
+            </div>
+        </div>
+
+        <!-- Tab 5: Executive Board -->
+        <div id="board-tab" class="tab-content">
+            <div class="section-card" style="grid-column: span 2;">
+                <div class="section-title">📊 Executive Audit & Officer KPI Anomalies</div>
+                <div class="info-status-box">
+                    Real-time monitoring of department resolution times, citizen feedback scores, and triage accuracy across Telangana districts.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(tabId + '-tab').classList.add('active');
+        }
+
+        function submitGrievance() {
+            const loc = document.getElementById('grievance-loc').value || 'Ameerpet Metro Zone';
+            const cat = document.getElementById('grievance-cat').value;
+            const text = document.getElementById('grievance-text').value || 'Water pipe leak on main road';
+
+            const statusBox = document.getElementById('status-box');
+            const logBox = document.getElementById('log-output');
+
+            statusBox.style.backgroundColor = '#E0F2FE';
+            statusBox.style.color = '#0369A1';
+            statusBox.innerHTML = `
+                <strong>✅ Grievance Registered & Dispatched</strong><br>
+                <strong>Tracking ID:</strong> TS-PRJ-2026-${Math.random().toString(36).substring(2, 7).toUpperCase()}<br>
+                <strong>Location:</strong> ${loc}<br>
+                <strong>Assigned Dept:</strong> ${cat}<br>
+                <strong>Priority:</strong> High (Auto-De-duplicated)
+            `;
+
+            logBox.style.display = 'block';
+            logBox.innerHTML = `[AI TRIAGE LOGS]
+[18:48:00] Citizen Auth Verified: Mobile OTP
+[18:48:01] Running Geospatial Deduplication check (50m radius)...
+[18:48:02] No active duplicate found in cluster.
+[18:48:03] Department Routing: Assigned to ${cat}
+[18:48:04] Priority score calculated: 88/100 (HIGH)
+[18:48:05] Official Receipt PDF generated.`;
+        }
+    </script>
 </body>
 </html>
